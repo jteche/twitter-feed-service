@@ -1,0 +1,17 @@
+name: call the gcp-release-to-prod.yml common workflow
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semantic Version of Project which we want to deploy to PROD
+        type: string
+        required: true
+
+jobs:
+  start:
+    uses: workflows/.github/workflows/gcp-release-to-prod.yml@main
+    with:
+      version: ${{ inputs.version }}
+    secrets:
+      GCP_ARTIFACT_REGISTRY_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_ARTIFACT_REGISTRY_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_ARTIFACT_REGISTRY_SERVICE_ACCOUNT: ${{ secrets.GCP_ARTIFACT_REGISTRY_SERVICE_ACCOUNT }}

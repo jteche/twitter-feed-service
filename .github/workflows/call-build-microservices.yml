@@ -1,0 +1,19 @@
+name: call the build-microservices.yml common workflow
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  start:
+    uses: .github/workflows/build-microservice.yml@main
+    secrets:
+      ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      CI_REPO_ACCESS: ${{ secrets.CI_REPO_ACCESS }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      GCP_ARTIFACT_REGISTRY_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_ARTIFACT_REGISTRY_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_ARTIFACT_REGISTRY_SERVICE_ACCOUNT: ${{ secrets.GCP_ARTIFACT_REGISTRY_SERVICE_ACCOUNT }}
+    with:
+      java_version: "21"
+      spring_boot_version: "3"

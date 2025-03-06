@@ -1,0 +1,26 @@
+server:
+  port: 8084
+
+spring:
+    application:
+      name: twitter.feed
+    kafka:
+      consumer:
+        bootstrap-servers: localhost:9092
+        group-id: twitter-feed-group
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        auto-offset-reset: earliest
+        properties:
+          spring.json.value.default.type: com.kafka.twitter.feed.model.MessageDto
+      producer:
+        bootstrap-servers: localhost:9092
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      topic:
+        name: twitter-feed-topic
+    security:
+      disabled: true
+      user:
+        name: admin
+        password: admin
