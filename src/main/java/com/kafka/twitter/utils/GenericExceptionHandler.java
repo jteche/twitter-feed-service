@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import javax.validation.ConstraintViolationException;
+import com.kafka.twitter.exception.CacheOperationException;
 
 
 @ControllerAdvice
@@ -32,5 +33,13 @@ public class GenericExceptionHandler {
     public ResponseEntity<String> handleAllExceptions(Exception ex, WebRequest request) {
         logger.error("An error occurred: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(CacheOperationException.class)
+    public ResponseEntity<String> handleCacheOperationException(CacheOperationException ex, WebRequest request) {
+        logger.error("Cache operation failed: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Cache operation failed: " + ex.getMessage());
     }
 }
